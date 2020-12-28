@@ -8,7 +8,7 @@ from email import encoders
 def autoreply(toaddr):
 	"""SEnd reply to contact submission."""
 
-	fromaddr = "subbusubramani1995@gmail.com"
+	fromaddr = "XXXXX@gmail.com"
 	msg = MIMEMultipart()
 
 	msg['From'] = fromaddr
@@ -21,7 +21,7 @@ def autoreply(toaddr):
 
 	server = smtplib.SMTP('smtp.gmail.com', 587)
 	server.starttls()
-	server.login(fromaddr, "gayathri3200")#"PASSWORD FOR FROMADDR")
+	server.login(fromaddr, "XXXXX")#"PASSWORD FOR FROMADDR")
 	text = msg.as_string()
 	server.sendmail(fromaddr, toaddr, text)
 	server.quit()
