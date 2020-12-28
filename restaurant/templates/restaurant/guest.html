@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Restaurant</title>
+<meta charset="utf-8">
+   {% include 'restaurant/snippets/header.html' %}
+<!--    
+<link rel="stylesheet" href="{% static 'restaurant/layout2.css' %}" type="text/css">-->
+    <script src="{% static 'restaurant/sorttable.js' %}"></script> 
+
+	    
+
+    
+</head>
+
+<body>
+<!--::header part start::-->
+
+    
+<div class="wrapper row1">
+  <header id="header" class="clear">
+    <div id="hgroup">
+    <a class="wrapper row1"><img src="{% static 'restaurant/img/favicon.png' %}" alt="logo">Restaurant</a> 
+	  <h1>Welcome, {{ user.get_full_name }}</h1>
+
+    </div>
+    <nav>
+      <ul>
+          <li><a href="{% url 'restaurant:guest' guest.id %}">Home</a></li>
+          <li><a href="{% url 'restaurant:restaurantlist' guest.id %}">Restaurants</a></li>
+          
+          <li><a href="{% url 'restaurant:profile' guest.id %}">Profile</a></li>
+          <li ><a href="{% url 'restaurant:about'  %}">AboutUs</a></li>
+          <li ><a href="{% url 'restaurant:contact'  %}">Contact</a></li>
+          <li class="last"><a href="{% url 'restaurant:logout' %}">Log Out</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+<!-- content -->
+<div class="wrapper row2">
+  <div id="container" class="clear">
+    <!-- Slider -->
+    <section id="slider" class="clear">
+        {% if info_message %}
+            <br />
+            <p id="info">{{ info_message }}</p>
+            <br />
+            <br />
+        {% endif %}		                 
+					<h2>Restaurant table reservation...</h2><br/>
+          <p><i>A table reservation is an arrangement made in advance to have a table available at a restaurant. While most restaurants in the vast majority of the world do not require a reservation, and some do not have a policy or simply any channel for making one, so-called higher-end restaurants mainly in overcrowded cities often require a reservation, and some may have tables booked for weeks in advance. At particularly exclusive venues, it may be impossible to make a reservation on the same day as the planned visit.</i></p>
+          <img    src="{% static 'restaurant/images/tables.jpg' %}" alt="gayathri project" width="auto" height="auto">
+					<br />
+					<br /><br/>
+             <br/><br/>
+          <h1> History Of Events</h1>
+					<table id="visits" class="sortable">
+						<thead>
+							<th>Restaurant</th>
+							<th>Date and Time</th>
+							<th>Duration (h)</th>
+							<th>Rating</th>
+						</thead>
+						{% for visit in visits %}
+							<tr>
+								<td>{{ visit.reservation.restaurant.name }}</td>
+								<td>{{ visit.reservation.coming }}</td>
+								<td>{{ visit.reservation.duration }}</td>
+								{% if visit.grade %}
+									<td>{{ visit.grade }}</td>
+									{% else %}
+									<td><a href="{% url 'restaurant:rate' guest.id visit.id %}"><button id="delete">Rate</button></a></td>
+								{% endif %}
+							</tr>
+						{% endfor %}
+					</table>
+    </section>
+    <!-- / content body -->
+  </div>
+</div>
+     {% include 'restaurant/snippets/footer.html' %}
+</body>
+
+</html>
+

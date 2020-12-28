@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Restaurant</title>
+<meta charset="utf-8">
+    {% load static %}
+<link rel="stylesheet" href="{% static 'restaurant/layout1.css' %}" type="text/css">
+
+    <script src="{% static 'restaurant/sorttable.js' %}"></script>
+	{% include 'restaurant/snippets/header.html' %}
+</head>
+<body>
+<div class="wrapper row1">
+  <header id="header" class="clear">
+    <div id="hgroup">
+      <a class="wrapper row1"><img src="{% static 'restaurant/img/favicon.png' %}" alt="logo">Restaurant</a>
+	  <h1>Welcome, {{ user.get_full_name }}</h1>
+    </div>
+    <nav>
+      <ul>
+          <li><a href="{% url 'restaurant:guest' guest.id %}">Home</a></li>
+          <li><a href="{% url 'restaurant:restaurantlist' guest.id %}">Restaurants</a></li>
+          <li><a href="{% url 'restaurant:friends' guest.id %}">Friends</a></li>
+          <li><a href="{% url 'restaurant:profile' guest.id %}">Profile</a></li>
+          <li class="last"><a href="{% url 'restaurant:logout' %}">Log Out</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+<!-- content -->
+<div class="wrapper row2">
+  <div id="container" class="clear">
+    <!-- Slider -->
+    <section id="slider" class="clear">
+        <h1>{{ restaurant.name }}</h1>
+      
+        <br />
+        {% if restaurant.image != None%}
+         <img src="{{ restaurant.image.url }}" alt="gayathri project" width="100%" height="auto">
+        {% endif %}
+        <p>{{ restaurant.description }}</p>
+        
+        <br />
+        <h2>{{ restaurant.address }}</h2>
+        <br />
+        <h2>Capacity: {{ restaurant.tables }} tables</h2>
+        <a href="{% url 'restaurant:reservationtime' guest.id restaurant.id %}"><button id="delete">Reserve</button></a>
+        <br />
+        <br />
+        <h2>Menu</h2>
+        <br />
+        <table id="visits" class="sortable">
+            <thead>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+            </thead>
+            {% for item in items %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.price}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </section>
+    <!-- / content body -->
+  </div>
+</div>
+     
+     {% include 'restaurant/snippets/footer.html' %}
+</body>
+
+</html>

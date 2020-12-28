@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Restaurant</title>
+<meta charset="utf-8">
+    {% load static %}
+<link rel="stylesheet" href="{% static 'restaurant/layout1.css' %}" type="text/css">
+    <script src="{% static 'restaurant/sorttable.js' %}"></script>
+	{% include 'restaurant/snippets/header.html' %}
+</head>
+<body>
+<div class="wrapper row1">
+  <header id="header" class="clear">
+    <div id="hgroup">
+      <a class="wrapper row1"><img src="{% static 'restaurant/img/favicon.png' %}" alt="logo">Restaurant</a>
+	  <h1>Welcome, {{ user.get_full_name }}</h1>
+    </div>
+    <nav>
+      <ul>
+          <li><a href="{% url 'restaurant:guest' guest.id %}">Home</a></li>
+          <li><a href="{% url 'restaurant:restaurantlist' guest.id %}">Restaurants</a></li>
+          <li><a href="{% url 'restaurant:friends' guest.id %}">Friends</a></li>
+          <li><a href="{% url 'restaurant:profile' guest.id %}">Profile</a></li>
+          <li class="last"><a href="{% url 'restaurant:logout' %}">Log Out</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+<!-- content -->
+<section class="regervation_part section_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-5">
+                    <div class="section_tittle">
+                        
+                        <h2>List of Restaurants</h2>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="regervation_part_iner">
+<div class="wrapper row2">
+  <div id="container" class="clear">
+    <!-- Slider -->
+    <!--<section id="slider" class="clear">
+      <br/>
+        <h1>List of Restaurants</h1>
+        <br />
+        <br />-->
+        <!--<img    src="{% static 'restaurant/images/tables.jpg' %}" alt="gayathri project" width="auto" height="auto"><br />
+        <br />
+        <br />-->
+        <table id="visits" class="sortable">
+            <thead>
+                <th>Restaurant</th>
+                <!--<th>Description</th>-->
+                <th>Address</th>
+                <th>Rating (5)</th>
+                <th>Friends Rating (5)</th>
+                <th>Menu</th>
+                <th>Reservation</th>
+            </thead>
+            {% for restaurant, rr, rfr in restaurants %}
+                <tr>
+                    <td>{{ restaurant.name }}</td>
+                    <!--<td>{{ restaurant.description }}</td>-->
+                    <td>{{ restaurant.address }}</td>
+                    {% if rr > 0 %}
+                        <td>{{ rr }}</td>
+                        {% else %}
+                        <td>N/A</td>
+                    {% endif %}
+                    {% if rfr > 0 %}
+                        <td>{{ rfr }}</td>
+                        {% else %}
+                        <td>N/A</td>
+                    {% endif %}
+                    <td><a href="{% url 'restaurant:restaurantmenu' guest.id restaurant.id %}"><button id="edit">Menu</button></a></td>
+                    <td><a href="{% url 'restaurant:reservationtime' guest.id restaurant.id %}"><button id="delete">Reserve</button></a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    <!--</section>-->
+    <!-- / content body -->
+  </div>
+</div>
+         </div>
+            </div>
+        </div>
+    </section>
+
+     {% include 'restaurant/snippets/footer.html' %}
+</body>
+
+</html>
+

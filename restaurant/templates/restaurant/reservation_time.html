@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+<title>Restaurant</title>
+<meta charset="utf-8">
+    {% load static %}
+<link rel="stylesheet" href="{% static 'restaurant/layout1.css' %}" type="text/css">
+    <script src="{% static 'restaurant/sorttable.js' %}"></script>
+    <script language="JavaScript" type="text/javascript" src="{% static 'restaurant/datetimepicker.js' %}"></script>
+    {% include 'restaurant/snippets/header.html' %}
+	
+</head>
+<body>
+<div class="wrapper row1">
+  <header id="header" class="clear">
+    <div id="hgroup">
+     <a class="wrapper row1"><img src="{% static 'restaurant/img/favicon.png' %}" alt="logo">Restaurant</a>
+	  <h1>Welcome, {{ user.get_full_name }}</h1>
+    </div>
+    <nav>
+      <ul>
+          <li><a href="{% url 'restaurant:guest' guest.id %}">Home</a></li>
+          <li><a href="{% url 'restaurant:restaurantlist' guest.id %}">Restaurants</a></li>
+          <li><a href="{% url 'restaurant:friends' guest.id %}">Friends</a></li>
+          <li><a href="{% url 'restaurant:profile' guest.id %}">Profile</a></li>
+          <li class="last"><a href="{% url 'restaurant:logout' %}">Log Out</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+<!-- content -->
+<div class="wrapper row2">
+  <div id="container" class="clear">
+    <!-- Slider -->
+    <section id="slider" class="clear">
+        <h1>{{ restaurant.name }}</h1> 
+        <br/>       
+        {% if restaurant.image != None%}
+         <img src="{{ restaurant.image.url }}" alt="gayathri project" width="100%" height="auto">
+        {% endif %}<br/>
+        <p>{{ restaurant.description }}</p>
+        
+        <br />
+        <h2>{{ restaurant.address }}</h2>
+        <br />
+        <br />
+        {% if error_message %}<p id="error">{{ error_message }}</p>{% endif %}
+        <br />
+        <br />
+        <h2>New Reservation</h2>
+        <br />
+        <img src="{% static 'restaurant/images/love.jpg' %}" alt="gayathri project" width="auto" height="auto">
+        <br />
+        <form action="{% url 'restaurant:makereservation' guest.id restaurant.id %}" method="post" class="menu_item">
+              {% csrf_token %}
+              <br />
+              <h3>Select Date and Time</h3>
+              <input readonly id="demo3" name="datetime" type="text">
+              <h3>Click to Select: <a href="javascript:NewCal('demo3','ddmmmyyyy',true,24)"><img src="{% static 'restaurant/cal.gif' %}" width="16" height="16" border="0" alt="Select Date and Time"></a></h3>
+              <br />
+              <h3>Duration (h)</h3>
+              <input id= "rate" name = "duration" type="number" min="1" max="7" required>
+              <br/>
+              <input type="submit" id = "sf_submit" value="Continue">
+              <br />
+        </form>
+    </section>
+    <!-- / content body -->
+  </div>
+</div>
+
+     {% include 'restaurant/snippets/footer.html' %}
+</body>
+
+</html>
+

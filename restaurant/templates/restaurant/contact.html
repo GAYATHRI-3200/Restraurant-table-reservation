@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Restaurant</title>
+<meta charset="utf-8">
+   {% include 'restaurant/snippets/header.html' %}
+    
+<link rel="stylesheet" href="{% static 'restaurant/layout2.css' %}" type="text/css">
+    <script src="{% static 'restaurant/sorttable.js' %}"></script>    
+</head>
+
+<body>
+<!--::header part start::-->
+ <header class="main_menu home_menu">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        
+                        <div class="collapse navbar-collapse main-menu-item justify-content-end"
+                            id="navbarSupportedContent">
+                            <ul class="navbar-nav">
+                            </ul>
+                        </div>
+                        <div class="regerv_btn">
+                           <a href="{% url 'restaurant:index' %}" class="btn_4">Home</a>
+                        </div>
+                        <div class="regerv_btn">
+                           <a href="{% url 'restaurant:contact' %}" class="btn_4">Contact</a>
+                        </div>
+                        
+
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Header part end--> 
+<div class="wrapper row1">
+  <header id="header" class="clear">
+    <div id="hgroup">
+    <a class="wrapper row1"><img src="{% static 'restaurant/img/favicon.png' %}" alt="logo">Restaurant</a> 
+    <h1>Welcome, {{ user.get_full_name }}</h1>
+
+    </div>
+    
+  </header>
+</div>      
+
+<!--content-->
+<div class="wrapper row2">
+  <div id="container" class="clear">
+    <section id="slider" class="clear">
+              
+     <br />
+<!--<div class="col-sm-6 col-sm-offset-3"> -->
+  <h1>{{ title }}</h1>
+  {% if confirmation %}
+    <p>{{ confirmation }}</p>
+  {% endif %}
+
+  {% if form %}
+     <form action="{% url 'restaurant:contact' %}" method="post" >
+    <!--<form method='POST' action=''>--> <!--POST data, action="": already contacturl.--> 
+    {% csrf_token %}
+    {{ form}}  
+   
+      <input type="submit" id = "sf_submit" value="submit">
+      
+    <!--<input type="Submit" value='submit' class='btn btn-default' />-->
+    </form>
+  {% endif %}
+</div>
+</div>
+</section>
+
+
+{% include 'restaurant/snippets/footer.html' %}
+</body>
+
+</html>

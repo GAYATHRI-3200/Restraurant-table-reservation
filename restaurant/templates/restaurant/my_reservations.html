@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Restaurant</title>
+<meta charset="utf-8">
+    {% load static %}
+<link rel="stylesheet" href="{% static 'restaurant/layout1.css' %}" type="text/css">
+    <script src="{% static 'restaurant/sorttable.js' %}"></script>
+      {% include 'restaurant/snippets/header.html' %}
+    
+	
+</head>
+<body>
+<div class="wrapper row1">
+  <header id="header" class="clear">
+    <div id="hgroup">
+      <a class="wrapper row1"><img src="{% static 'restaurant/img/favicon.png' %}" alt="logo">Restaurant</a>
+	  <h1>Welcome, {{ user.get_full_name }}</h1>
+    </div>
+    <nav>
+      <ul>
+          <li><a href="{% url 'restaurant:guest' guest.id %}">Home</a></li>
+          <li><a href="{% url 'restaurant:restaurantlist' guest.id %}">Restaurants</a></li>
+          <li><a href="{% url 'restaurant:friends' guest.id %}">Friends</a></li>
+          <li><a href="{% url 'restaurant:profile' guest.id %}">Profile</a></li>
+          <li class="last"><a href="{% url 'restaurant:logout' %}">Log Out</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+<!-- content -->
+<div class="wrapper row2">
+  <div id="container" class="clear">
+    <!-- Slider -->
+    <section id="slider" class="clear">
+        <h1>My Reservations</h1>
+        <br />
+        <br />
+        <table id="visits" class="sortable">
+            <thead>
+                <th>Restaurant</th>
+                <th>Date and Time</th>
+                <th>Duration (h)</th>
+            </thead>
+            {% for reservation in reservations %}
+                <tr>
+                    <td>{{ reservation.restaurant }}</td>
+                    <td>{{ reservation.coming }}</td>
+                    <td>{{ reservation.duration }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </section>
+    <!-- / content body -->
+  </div>
+</div>
+ {% include 'restaurant/snippets/footer.html' %}
+</body>
+
+</html>
